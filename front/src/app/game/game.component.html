@@ -1,0 +1,31 @@
+<div>
+  <nz-card>
+    <div nz-row>
+      <div nz-col nzSpan="7" style="text-align: center;">
+        <span *ngIf="game.a_won" nz-icon nzType="crown" nzTheme="twotone" nzTwotoneColor="#FCD523" class="crown"></span>
+      </div>
+      <div nz-col nzSpan="7" nzOffset="10" style="text-align: center;">
+        <span *ngIf="game.b_won" nz-icon nzType="crown" nzTheme="twotone" nzTwotoneColor="#FCD523" class="crown"></span>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="7">{{game.player_a1.display_name}}<br>{{game.player_a2.display_name}}</div>
+      <div nz-col nzSpan="8" nzOffset="1">
+        <div nz-row>
+          <div nz-col nzSpan="10" [ngClass]="{'winner': game.a_won, 'loser': game.b_won, 'neutral': game.stars_a >= 3 || game.stars_b >=3 }">{{game.score_a}}</div>
+          <div nz-col nzSpan="10" nzOffset="4" [ngClass]="{'winner': game.b_won, 'loser': game.a_won, 'neutral': game.stars_a >= 3 || game.stars_b >=3 }" style="text-align: right">{{game.score_b}}</div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="10">
+            <span *ngFor="let f of [].constructor(game.stars_a)" nz-icon nzType="star" nzTheme="fill" class="stars" [ngClass]="{'loser': game.stars_a >=3}"></span>
+          </div>
+          <div nz-col nzSpan="10" nzOffset="4" style="text-align: right">
+            <span *ngFor="let f of [].constructor(game.stars_b)" nz-icon nzType="star" nzTheme="fill" class="stars" [ngClass]="{'loser': game.stars_b >=3}"></span>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzSpan="7" nzOffset="1" style="text-align: right;">{{game.player_b1.display_name}}<br>{{game.player_b2.display_name}}</div>
+    </div>
+    <div style="text-align: right" class="date">{{ game.date | date: 'dd/MM/yy' }}</div>
+  </nz-card>
+</div>

@@ -1,0 +1,22 @@
+<nz-table #filterTable [nzData]="stats" nzFrontPagination="false">
+  <thead>
+    <tr>
+      <th
+          *ngFor="let column of listOfColumns"
+          [nzSortOrder]="column.sortOrder"
+          [nzSortFn]="column.sortFn"
+          [nzSortDirections]="column.sortDirections"
+        >
+          {{ column.name }}
+        </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of filterTable.data">
+      <td><a [routerLink]="['/profile', user.id]" style="color: black;">{{ user.display_name }}</a></td>
+      <td><span style="color: green">{{ user.wins }}</span> / <span style="color: red">{{ user.games - user.wins}}</span></td>
+      <td>{{ (user.wins / user.games).toFixed(2) }}</td>
+      <td>{{ (user.stars / user.games).toFixed(2) }}</td>
+    </tr>
+  </tbody>
+</nz-table>

@@ -1,0 +1,19 @@
+.button-container {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.button {
+  background-color:#FE4C4C;
+  color: #fff;
+  border: none;
+  width: 55px;
+  height: 55px;
+  font-size: 28px;
+}
+
+.scrollable {
+    position: absolute;
+    overflow: auto;
+}
