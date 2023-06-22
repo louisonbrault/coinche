@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpwd
+      POSTGRES_DB: coinche
+    ports:
+      - 5432:5432
+  admin:
+    image: adminer
+    ports:
+      - 99:8080

@@ -1,0 +1,13 @@
+alembic
+fastapi
+fastapi-auth
+httpx
+psycopg2-binary
+pydantic
+pytest
+python-dotenv
+python-keycloak
+python-slugify
+python-social-auth
+sqlalchemy
+uvicorn
