@@ -1,7 +1,7 @@
 name: test
 
 on:
-  commit:
+  push
 
 jobs:
   build:
