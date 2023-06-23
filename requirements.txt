@@ -9,5 +9,6 @@ pydantic
 pytest
 python-dotenv
 python-slugify
+requests
 sqlalchemy
 uvicorn
