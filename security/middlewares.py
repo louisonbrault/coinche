@@ -14,7 +14,7 @@ from schemas.game import GameCreate
 
 load_dotenv()
 SECRET_KEY = environ.get("SECRET_KEY")
-ALGORITHM = environ.get("ALGORITHM")
+ALGORITHM = environ.get("ALGORITHM", "HS256")
 
 security = HTTPBearer()
 

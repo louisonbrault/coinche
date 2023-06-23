@@ -15,7 +15,11 @@ from database import get_db
 from schemas.security import AccessToken, AuthToken, HTTPError
 from schemas.user import UserCreate
 
-from security.facebook import TokenInvalidException, get_facebook_access_token, get_facebook_id_from_auth_token, get_facebook_name_from_facebook_id
+from security.facebook import \
+    TokenInvalidException, \
+    get_facebook_access_token, \
+    get_facebook_id_from_auth_token, \
+    get_facebook_name_from_facebook_id
 
 
 security_router = APIRouter()
@@ -24,7 +28,7 @@ security_router = APIRouter()
 load_dotenv()
 SECRET_KEY = environ.get("SECRET_KEY")
 ALGORITHM = environ.get("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = environ.get("ACCESS_TOKEN_EXPIRE_MINUTES")
+ACCESS_TOKEN_EXPIRE_MINUTES = environ.get("ACCESS_TOKEN_EXPIRE_MINUTES", "180")
 
 
 # Fonction de génération du JWT
@@ -75,7 +79,6 @@ def login(authToken: AuthToken, db: Session = Depends(get_db)) -> AccessToken:
         else:
             user_create = UserCreate(display_name=name, facebook_id=user_facebook_id)
             user = create_user(db, user_create)
-
 
     # L'authentification est réussie
     user = {"user_id": user.id, "display_name": user.display_name, "role": user.role}

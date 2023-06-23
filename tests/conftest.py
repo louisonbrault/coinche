@@ -64,31 +64,31 @@ def create_4_users(session: Session):
 
 def valid_game_data():
     return {
-      "date": "2023-06-11",
-      "score_a": 1600,
-      "score_b": 800,
-      "stars_a": 0,
-      "stars_b": 1,
-      "a_won": True,
-      "b_won": False,
-      "player_a1_id": 1,
-      "player_a2_id": 2,
-      "player_b1_id": 3,
-      "player_b2_id": 4
+        "date": "2023-06-11",
+        "score_a": 1600,
+        "score_b": 800,
+        "stars_a": 0,
+        "stars_b": 1,
+        "a_won": True,
+        "b_won": False,
+        "player_a1_id": 1,
+        "player_a2_id": 2,
+        "player_b1_id": 3,
+        "player_b2_id": 4
     }
 
 
 def complex_data(session: Session):
     create_4_users(session)
     g1 = Game(score_a=1600, score_b=20, a_won=True, b_won=False, player_a1_id=1, player_a2_id=2, player_b1_id=3,
-                    player_b2_id=4)
+              player_b2_id=4)
     g2 = Game(score_a=1600, score_b=20, a_won=True, b_won=False, player_a1_id=1, player_a2_id=3, player_b1_id=2,
-                    player_b2_id=4)
+              player_b2_id=4)
     g3 = Game(score_a=600, score_b=2220, a_won=False, b_won=True, player_a1_id=4, player_a2_id=2, player_b1_id=3,
-                    player_b2_id=1)
+              player_b2_id=1)
     g4 = Game(score_a=100, score_b=2220, a_won=False, b_won=True, player_a1_id=1, player_a2_id=4, player_b1_id=3,
-                    player_b2_id=2)
+              player_b2_id=2)
     g5 = Game(score_a=1600, score_b=20, a_won=True, b_won=False, player_a1_id=3, player_a2_id=2, player_b1_id=1,
-                    player_b2_id=4)
+              player_b2_id=4)
     session.bulk_save_objects([g1, g2, g3, g4, g5])
     session.commit()

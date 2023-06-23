@@ -31,7 +31,7 @@ def update_user(db: Session, user: User) -> User:
 
 
 def get_user_from_id(db: Session, user_id: int) -> User:
-    return db.query(User).get(user_id)
+    return db.get(User, user_id)
 
 
 def get_user_from_facebook_id(db: Session, facebook_id: str) -> User:
@@ -61,10 +61,15 @@ def get_stats_for_user(db: Session, user_id: int):
     ).label("opponent")
     wins_query = func.sum(
         case(
-            (user_id == Game.player_a1_id, case((Game.player_a2_id != User.id, case((Game.a_won, 1), else_=0)), else_=0)),
-            (user_id == Game.player_a2_id, case((Game.player_a1_id != User.id, case((Game.a_won, 1), else_=0)), else_=0)),
-            (user_id == Game.player_b1_id, case((Game.player_b2_id != User.id, case((Game.b_won, 1), else_=0)), else_=0)),
-            (user_id == Game.player_b2_id, case((Game.player_b1_id != User.id, case((Game.b_won, 1), else_=0)), else_=0))
+            (user_id == Game.player_a1_id,
+             case((Game.player_a2_id != User.id, case((Game.a_won, 1), else_=0)), else_=0)),
+            (user_id == Game.player_a2_id,
+             case((Game.player_a1_id != User.id, case((Game.a_won, 1), else_=0)), else_=0)),
+            (user_id == Game.player_b1_id,
+             case((Game.player_b2_id != User.id, case((Game.b_won, 1), else_=0)), else_=0)),
+            (
+                user_id == Game.player_b2_id,
+                case((Game.player_b1_id != User.id, case((Game.b_won, 1), else_=0)), else_=0))
         )
     ).label("wins")
     query = (db.query(
@@ -76,18 +81,17 @@ def get_stats_for_user(db: Session, user_id: int):
         (opponent_query - wins_query).label("defeats")
     )
      .filter(User.id != user_id)
+     .filter(or_(Game.player_a1_id == user_id,
+                 Game.player_a2_id == user_id,
+                 Game.player_b1_id == user_id,
+                 Game.player_b2_id == user_id,
+                 ))
      .filter(or_(
-        Game.player_a1_id == user_id,
-        Game.player_a2_id == user_id,
-        Game.player_b1_id == user_id,
-        Game.player_b2_id == user_id,
-    ))
-     .filter(or_(
-        Game.player_a1_id == User.id,
-        Game.player_a2_id == User.id,
-        Game.player_b1_id == User.id,
-        Game.player_b2_id == User.id,
-     ))
+                Game.player_a1_id == User.id,
+                Game.player_a2_id == User.id,
+                Game.player_b1_id == User.id,
+                Game.player_b2_id == User.id,
+                ))
      .group_by(User.id)
      .group_by(User.display_name)
      )
@@ -118,7 +122,8 @@ def get_stats_for_users(db: Session) -> list[UserStat]:
     users = query.all()
     response = []
     for user in users:
-        response.append(UserStat(id=user.id, display_name=user.display_name, wins=user.wins, games=user.games, stars=user.stars))
+        response.append(
+            UserStat(id=user.id, display_name=user.display_name, wins=user.wins, games=user.games, stars=user.stars))
     return response
 
 
@@ -149,7 +154,7 @@ def get_simple_stat_query(db: Session) -> Query:
         Game.player_b1_id == User.id,
         Game.player_b2_id == User.id,
     )).group_by(User.id)
-     .group_by(User.display_name)
-     .order_by(wins.desc())
-     )
+             .group_by(User.display_name)
+             .order_by(wins.desc())
+             )
     return query

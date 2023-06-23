@@ -13,7 +13,8 @@ class TokenInvalidException(Exception):
 def get_facebook_access_token() -> str:
     client_id = environ.get("FACEBOOK_APP_ID")
     client_secret = environ.get("FACEBOOK_APP_SECRET")
-    url = f"https://graph.facebook.com/oauth/access_token?client_id={client_id}&client_secret={client_secret}&grant_type=client_credentials"
+    base_url = "https://graph.facebook.com/oauth/access_token"
+    url = f"{base_url}?client_id={client_id}&client_secret={client_secret}&grant_type=client_credentials"
 
     response = requests.get(url)
     return response.json().get("access_token")

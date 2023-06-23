@@ -1,13 +1,13 @@
 alembic
+coverage
 fastapi
 fastapi-auth
+flake8
 httpx
 psycopg2-binary
 pydantic
 pytest
 python-dotenv
-python-keycloak
 python-slugify
-python-social-auth
 sqlalchemy
 uvicorn

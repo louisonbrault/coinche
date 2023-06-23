@@ -48,7 +48,11 @@ def test_login_user_known(mock_get_facebook_id_from_auth_token, mock_get_faceboo
 @patch('routes.security.get_facebook_id_from_auth_token')
 @patch('routes.security.get_facebook_name_from_facebook_id')
 def test_login_user_unknown_with_same_slug(
-        mock_get_facebook_name_from_facebook_id, mock_get_facebook_id_from_auth_token, mock_get_facebook_access_token, session: Session):
+        mock_get_facebook_name_from_facebook_id,
+        mock_get_facebook_id_from_auth_token,
+        mock_get_facebook_access_token,
+        session: Session
+):
     mock_get_facebook_access_token.return_value = "499426098996..."
     mock_get_facebook_id_from_auth_token.return_value = "123456"
     mock_get_facebook_name_from_facebook_id.return_value = "toto"
@@ -66,7 +70,11 @@ def test_login_user_unknown_with_same_slug(
 @patch('routes.security.get_facebook_id_from_auth_token')
 @patch('routes.security.get_facebook_name_from_facebook_id')
 def test_login_user_totaly_unknown(
-        mock_get_facebook_name_from_facebook_id, mock_get_facebook_id_from_auth_token, mock_get_facebook_access_token, session: Session):
+        mock_get_facebook_name_from_facebook_id,
+        mock_get_facebook_id_from_auth_token,
+        mock_get_facebook_access_token,
+        session: Session
+):
     mock_get_facebook_access_token.return_value = "499426098996..."
     mock_get_facebook_id_from_auth_token.return_value = "123456"
     mock_get_facebook_name_from_facebook_id.return_value = "tata"
