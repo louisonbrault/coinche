@@ -10,7 +10,7 @@ jobs:
       matrix:
         python-version: [3.11]
     env:
-      SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+      SQLALCHEMY_DATABASE_URL: sqlite:///./test.db
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
