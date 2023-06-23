@@ -11,6 +11,7 @@ jobs:
         python-version: [3.11]
     env:
       SQLALCHEMY_DATABASE_URL: sqlite:///./test.db
+      SECRET_KEY: secured_key
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
