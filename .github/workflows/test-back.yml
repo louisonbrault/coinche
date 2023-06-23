@@ -9,9 +9,6 @@ jobs:
     strategy:
       matrix:
         python-version: [3.11]
-    services:
-    env:
-      SECRET_KEY: super-secured-key
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
