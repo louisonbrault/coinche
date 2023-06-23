@@ -27,7 +27,7 @@ security_router = APIRouter()
 # Configuration du secret JWT
 load_dotenv()
 SECRET_KEY = environ.get("SECRET_KEY")
-ALGORITHM = environ.get("ALGORITHM")
+ALGORITHM = environ.get("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = environ.get("ACCESS_TOKEN_EXPIRE_MINUTES", "180")
 
 
