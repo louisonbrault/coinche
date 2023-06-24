@@ -4,6 +4,7 @@ import { Game } from '../models/game.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import ls from 'localstorage-slim';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -11,12 +12,14 @@ import ls from 'localstorage-slim';
 })
 export class GameService {
 
+  apiUrl = environment.apiUrl;
+
   constructor(private http: HttpClient, private datepipe: DatePipe){
 
   }
 
   getAllGames(skip: number, limit: number): Observable<Game[]> {
-      return this.http.get<Game[]>(`http://localhost:8000/games?skip=${skip}&limit=${limit}`);
+      return this.http.get<Game[]>(`${this.apiUrl}/games?skip=${skip}&limit=${limit}`);
   }
 
   addGame(
@@ -44,7 +47,7 @@ export class GameService {
     const headers = new HttpHeaders({
         'Authorization': `Bearer ${access_token}`
       });
-    return this.http.post<Game>('http://localhost:8000/games', postData, {headers: headers});
+    return this.http.post<Game>(`${this.apiUrl}/games`, postData, {headers: headers});
   }
 
 
