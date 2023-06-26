@@ -17,6 +17,6 @@ FROM nginx:alpine
 COPY --from=builder /app/dist/coinche/ /usr/share/nginx/html
 
 # Changement de la conf nginx
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
 CMD envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && nginx -g "daemon off;"
