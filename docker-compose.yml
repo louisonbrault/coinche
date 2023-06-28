@@ -14,3 +14,11 @@ services:
     image: adminer
     ports:
       - 99:8080
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pg@pg.pg
+      PGADMIN_DEFAULT_PASSWORD: pw
+    ports:
+      - 100:80

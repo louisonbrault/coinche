@@ -12,8 +12,8 @@
       <div nz-col nzSpan="7">{{game.player_a1.display_name}}<br>{{game.player_a2.display_name}}</div>
       <div nz-col nzSpan="8" nzOffset="1">
         <div nz-row>
-          <div nz-col nzSpan="10" [ngClass]="{'winner': game.a_won, 'loser': game.b_won, 'neutral': game.stars_a >= 3 || game.stars_b >=3 }">{{game.score_a}}</div>
-          <div nz-col nzSpan="10" nzOffset="4" [ngClass]="{'winner': game.b_won, 'loser': game.a_won, 'neutral': game.stars_a >= 3 || game.stars_b >=3 }" class="right-align-text">{{game.score_b}}</div>
+          <div nz-col nzSpan="10" [ngClass]="{'winner': game.a_won, 'loser': game.b_won, 'neutral': game.stars_a >= 3 || game.stars_b >=3 }" class="font-size-18">{{game.score_a}}</div>
+          <div nz-col nzSpan="10" nzOffset="4" [ngClass]="{'winner': game.b_won, 'loser': game.a_won, 'neutral': game.stars_a >= 3 || game.stars_b >=3 }" class="right-align-text font-size-18">{{game.score_b}}</div>
         </div>
         <div nz-row>
           <div nz-col nzSpan="10">

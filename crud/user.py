@@ -43,6 +43,9 @@ def get_user_from_slug_name(db: Session, slug_name: str) -> User:
 
 
 def get_stats_for_user(db: Session, user_id: int):
+    user = get_user_from_id(db, user_id)
+    if not user:
+        return None
     teammate_query = func.sum(
         case(
             (user_id == Game.player_a1_id, case((Game.player_a2_id == User.id, 1), else_=0)),
@@ -100,6 +103,10 @@ def get_stats_for_user(db: Session, user_id: int):
     target = query.order_by(wins_query.desc()).first()
     executioner = query.order_by(desc("defeats")).first()
     simple_stats = get_simple_stat_query(db).filter(User.id == user_id).first()
+    if not simple_stats:
+        return UserProfile(
+            id=user.id, display_name=user.display_name
+        )
     return UserProfile(
         id=simple_stats.id,
         display_name=simple_stats.display_name,

@@ -32,17 +32,17 @@ class UserLight(BaseModel):
 class UserStat(BaseModel):
     id: int
     display_name: str
-    games: int
-    wins: int
-    stars: int
+    games: int = 0
+    wins: int = 0
+    stars: int = 0
 
 
 class UserProfile(UserStat):
-    best_teammate: str
-    teammate_times: int
-    best_opponent: str
-    oppositions: int
-    best_target: str
-    victories: int
-    executioner: str
-    defeats: int
+    best_teammate: str = None
+    teammate_times: int = 0
+    best_opponent: str = None
+    oppositions: int = 0
+    best_target: str = None
+    victories: int = 0
+    executioner: str = None
+    defeats: int = 0

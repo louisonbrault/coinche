@@ -17,7 +17,10 @@ def get_users(db: Session = Depends(get_db)):
 
 @user_router.get("/users/{user_id}", response_model=UserProfile, tags=["Users"])
 def get_profile(user_id: int, db: Session = Depends(get_db)):
-    return get_stats_for_user(db, user_id)
+    stats = get_stats_for_user(db, user_id)
+    if not stats:
+        raise HTTPException(status_code=404, detail="User not found")
+    return stats
 
 
 @user_router.get("/stats", response_model=list[UserStat], tags=["Users"])
