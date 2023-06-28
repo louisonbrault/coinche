@@ -24,8 +24,7 @@
     "facebook-login": "^1.4.1",
     "jwt-decode": "^3.1.2",
     "localstorage-slim": "^2.4.0",
-    "ng-zorro-antd": "^15.1.0",
-    "ngx-cookie-service": "^16.0.0",
+    "ng-zorro-antd": "^16.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.1"
