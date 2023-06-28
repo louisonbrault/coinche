@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-sub-header',
   templateUrl: './sub-header.component.html',
-  styleUrls: ['./sub-header.component.scss']
+  styleUrls: ['./sub-header.component.scss', '../app.component.scss']
 })
 export class SubHeaderComponent implements OnInit {
 

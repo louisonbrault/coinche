@@ -1,31 +1,31 @@
 <div *ngIf="userLoggedIn && (userRole == 'writer' || userRole == 'admin')">
-  <div nz-row style="font-size: 20px;">
-    <div nz-col nzSpan="11" style="text-align: center"><b>Equipe A</b></div>
-    <div nz-col nzSpan="11" nzOffset="2" style="text-align: center"><b>Equipe B</b></div>
+  <div nz-row class="font-size-20">
+    <div nz-col nzSpan="11" class="center-text"><b>Equipe A</b></div>
+    <div nz-col nzSpan="11" nzOffset="2" class="center-text"><b>Equipe B</b></div>
   </div>
   <p class="p">Composition 👦🏻👩🏼</p>
   <form nz-form [formGroup]="gameForm" (ngSubmit)="onSubmitForm()">
   <div nz-row>
-    <div nz-col nzSpan="11" style="text-align: center">
+    <div nz-col nzSpan="11" class="center-text">
       <nz-form-item><nz-form-control>
-        <nz-select id="player_a1"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" style="width: 80%;" formControlName="player_a1_id">
+        <nz-select id="player_a1"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" class="width-80" formControlName="player_a1_id">
           <nz-option *ngFor="let user of users" nzLabel={{user.display_name}} nzValue={{user.id}}></nz-option>
         </nz-select>
       </nz-form-control></nz-form-item>
       <nz-form-item><nz-form-control>
-        <nz-select id="player_a2"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" style="width: 80%; margin-top: 10px;" formControlName="player_a2_id">
+        <nz-select id="player_a2"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" class="margin-top-10 width-80" formControlName="player_a2_id">
           <nz-option *ngFor="let user of users" nzLabel={{user.display_name}} nzValue={{user.id}}></nz-option>
         </nz-select>
       </nz-form-control></nz-form-item>
     </div>
-    <div nz-col nzSpan="11" nzOffset="2" style="text-align: center">
+    <div nz-col nzSpan="11" nzOffset="2" class="center-text">
       <nz-form-item><nz-form-control>
-        <nz-select id="player_b1"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" style="width: 80%;" formControlName="player_b1_id">
+        <nz-select id="player_b1"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" class="width-80" formControlName="player_b1_id">
           <nz-option *ngFor="let user of users" nzLabel={{user.display_name}} nzValue={{user.id}}></nz-option>
         </nz-select>
       </nz-form-control></nz-form-item>
       <nz-form-item><nz-form-control>
-        <nz-select id="player_b2"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" style="width: 80%; margin-top: 10px;" formControlName="player_b2_id">
+        <nz-select id="player_b2"  nzShowSearch nzAllowClear nzPlaceHolder="Joueur" class="margin-top-10 width-80" formControlName="player_b2_id">
           <nz-option *ngFor="let user of users" nzLabel={{user.display_name}} nzValue={{user.id}}></nz-option>
         </nz-select>
       </nz-form-control></nz-form-item>
@@ -33,21 +33,21 @@
   </div>
   <p class="p">Scores 💯</p>
   <div nz-row>
-    <div nz-col nzSpan="11" style="text-align: center">
+    <div nz-col nzSpan="11" class="center-text">
       <nz-form-item><nz-form-control>
-        <nz-input-number [nzMin]="0" [nzMax]="3000" [nzStep]="10" nzPlaceHolder="Score" style="width: 80%;" formControlName="score_a"></nz-input-number>
-        <nz-rate [nzCount]="4" style="margin-top: 10px; font-size: 20px;" formControlName="stars_a"></nz-rate>
+        <nz-input-number [nzMin]="0" [nzMax]="3000" [nzStep]="10" nzPlaceHolder="Score" class="width-80" formControlName="score_a"></nz-input-number>
+        <nz-rate [nzCount]="4" class="font-size-20 margin-top-10" formControlName="stars_a"></nz-rate>
       </nz-form-control></nz-form-item>
     </div>
-    <div nz-col nzSpan="11" nzOffset="2" style="text-align: center">
+    <div nz-col nzSpan="11" nzOffset="2" class="center-text">
       <nz-form-item><nz-form-control>
-        <nz-input-number [nzMin]="0" [nzMax]="3000" [nzStep]="10" nzPlaceHolder="Score" style="width: 80%;" formControlName="score_b"></nz-input-number>
-        <nz-rate [nzCount]="4" style="margin-top: 10px; font-size: 20px;" formControlName="stars_b"></nz-rate>
+        <nz-input-number [nzMin]="0" [nzMax]="3000" [nzStep]="10" nzPlaceHolder="Score" class="width-80" formControlName="score_b"></nz-input-number>
+        <nz-rate [nzCount]="4" class="font-size-20 margin-top-10" formControlName="stars_b"></nz-rate>
     </nz-form-control></nz-form-item>
     </div>
   </div>
   <p class="p">Vainqueur 🏅</p>
-  <div style="text-align: center">
+  <div class="center-text">
     <nz-form-item><nz-form-control>
       <nz-radio-group nzButtonStyle="solid" formControlName="winner">
         <label nz-radio-button nzValue="A">Equipe A</label>
@@ -55,12 +55,12 @@
       </nz-radio-group>
     </nz-form-control></nz-form-item>
   </div>
-  <div nz-row style="margin-top: 10px;">
+  <div nz-row class="margin-top-10">
     <div nz-col nzSpan="6"><p class="p">Date 📅</p></div>
 
-    <div nz-col nzSpan="12" style="text-align: center;">
+    <div nz-col nzSpan="12" class="center-text">
       <nz-form-item><nz-form-control>
-      <nz-date-picker formControlName="date" nzSize="small" style="margin-top: 10px;" nzFormat="dd/MM/yyyy"></nz-date-picker>
+      <nz-date-picker formControlName="date" nzSize="small" class="margin-top-10" nzFormat="dd/MM/yyyy"></nz-date-picker>
       </nz-form-control></nz-form-item>
     </div>
   </div>

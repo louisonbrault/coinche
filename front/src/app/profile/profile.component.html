@@ -1,31 +1,31 @@
-<div nz-row style="margin-top: 10px; font-size: 16px;">
-  <div nz-col nzSpan="20" nzOffset="2" style="text-align: center;">
-    <div style="margin-left: 4px;">{{ profile.display_name }}</div>
-    <div style="margin-left: 4px;"><span style="color: green">{{ profile.wins }}</span> / <span style="color: red">{{  profile.games - profile.wins }}</span></div>
-    <div style="margin-left: 4px;">{{ (profile.stars / profile.games).toFixed(2) }} ⭐</div>
+<div nz-row class="margin-top-10 font-size-16">
+  <div nz-col nzSpan="20" nzOffset="2" class="center-text">
+    <div class="margin-left-4">{{ profile.display_name }}</div>
+    <div class="margin-left-4"><span class="green">{{ profile.wins }}</span> / <span class="red">{{  profile.games - profile.wins }}</span></div>
+    <div class="margin-left-4">{{ (profile.stars / profile.games).toFixed(2) }} ⭐</div>
   </div>
 </div>
-<div nz-row style="margin-top: 10px; text-align: center; font-size: 14px;">
+<div nz-row class="margin-top-10 center-text font-size-14">
   <div nz-col nzSpan="18" nzOffset="3">
-    <div style="font-size: 60px">🤜 🤛</div>
+    <div class="font-size-60">🤜 🤛</div>
     <div>{{ profile.teammate_times }} parties avec {{ profile.best_teammate }}</div>
   </div>
 </div>
-<div nz-row style="margin-top: 7px; text-align: center; font-size: 14px;">
+<div nz-row class="margin-top-7 center-text font-size-14">
   <div nz-col nzSpan="18" nzOffset="3">
-    <div style="font-size: 60px">⚔️</div>
+    <div class="font-size-60">⚔️</div>
     <div>{{ profile.oppositions }} combats contre {{ profile.best_opponent }}</div>
   </div>
 </div>
-<div nz-row style="margin-top: 7px; text-align: center; font-size: 14px;">
+<div nz-row class="margin-top-7 center-text font-size-14">
   <div nz-col nzSpan="18" nzOffset="3">
-    <div style="font-size: 60px">🎯</div>
+    <div class="font-size-60">🎯</div>
     <div>{{ profile.victories }} victoires contre {{ profile.best_target}}</div>
   </div>
 </div>
-<div nz-row style="margin-top: 7px; text-align: center; font-size: 14px;">
+<div nz-row class="margin-top-7 center-text font-size-14">
   <div nz-col nzSpan="18" nzOffset="3">
-    <div style="font-size: 60px">🤬</div>
+    <div class="font-size-60">🤬</div>
     <div>{{ profile.defeats }} défaites contre {{ profile.executioner }}</div>
   </div>
 </div>

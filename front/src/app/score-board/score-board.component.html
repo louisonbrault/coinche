@@ -13,8 +13,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let user of filterTable.data">
-      <td><a [routerLink]="['/profile', user.id]" style="color: black;">{{ user.display_name }}</a></td>
-      <td><span style="color: green">{{ user.wins }}</span> / <span style="color: red">{{ user.games - user.wins}}</span></td>
+      <td><a [routerLink]="['/profile', user.id]" class="black">{{ user.display_name }}</a></td>
+      <td><span class="green">{{ user.wins }}</span> / <span class="red">{{ user.games - user.wins}}</span></td>
       <td>{{ (user.wins / user.games).toFixed(2) }}</td>
       <td>{{ (user.stars / user.games).toFixed(2) }}</td>
     </tr>

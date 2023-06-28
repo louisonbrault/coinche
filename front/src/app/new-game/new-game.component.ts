@@ -12,7 +12,7 @@ import { AuthState } from '../auth/auth.states';
 @Component({
   selector: 'app-new-game',
   templateUrl: './new-game.component.html',
-  styleUrls: ['./new-game.component.scss']
+  styleUrls: ['./new-game.component.scss', '../app.component.scss']
 })
 export class NewGameComponent implements OnInit {
 

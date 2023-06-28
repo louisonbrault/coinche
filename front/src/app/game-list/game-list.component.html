@@ -1,4 +1,4 @@
-<div style="height: 450px; overflow: auto;">
+<div class="main-container">
   <app-game *ngFor="let game of games$ | async" [game]="game"></app-game>
 </div>
 <div *ngIf="userLoggedIn && (userRole == 'writer' || userRole == 'admin')" class="button-container">
