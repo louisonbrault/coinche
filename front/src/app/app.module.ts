@@ -33,7 +33,7 @@ import { GameListComponent } from './game-list/game-list.component';
 import { HeaderComponent } from './header/header.component';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import {  FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import { FacebookLoginProvider} from '@abacritt/angularx-social-login';
 import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
 import { SubHeaderComponent } from './sub-header/sub-header.component';
 import { NewGameComponent } from './new-game/new-game.component';
