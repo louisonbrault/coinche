@@ -6,6 +6,7 @@ from pydantic import BaseModel
 class UserBase(BaseModel):
     display_name: str
     facebook_id: str = None
+    role: str = "writer"
 
 
 class UserCreate(UserBase):

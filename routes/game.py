@@ -6,7 +6,7 @@ from crud.game import create_game, list_games
 from database import get_db
 from models.user import User
 from schemas.game import Game, GameCreate, GameUserInfo
-from security.middlewares import has_role
+from security.middlewares import authenticate, has_role
 
 game_router = APIRouter()
 
@@ -21,8 +21,8 @@ def get_games(user_id: int = None, skip: int = None, limit: int = None, db: Sess
     200: {"description": "Game created."},
     400: {"description": "Game not created due to errors on request."}
 })
-@has_role("writer")
-def post_games(user: User, game_data: GameCreate, db: Session = Depends(get_db)):
+def post_games(game_data: GameCreate, user: User = Depends(authenticate), db: Session = Depends(get_db)):
+    has_role("writer", user)
     try:
         game = create_game(db, game=game_data, creator_id=user.id)
     except IntegrityError:

@@ -9,7 +9,6 @@ from sqlalchemy.orm import Session
 from crud.user import get_user_from_id
 from database import get_db
 from models.user import User
-from schemas.game import GameCreate
 
 
 load_dotenv()
@@ -28,11 +27,6 @@ async def authenticate(token: str = Depends(security), db: Session = Depends(get
         raise HTTPException(status_code=401, detail="Invalid token")
 
 
-def has_role(role: str):
-    def decorator(func):
-        async def wrapper(game_data: GameCreate, user=Depends(authenticate), db: Session = Depends(get_db)):
-            if user.role != role and user.role != "admin":
-                raise HTTPException(status_code=403, detail="Access denied")
-            return func(user, game_data, db)
-        return wrapper
-    return decorator
+def has_role(role: str, user: User):
+    if user.role != role and user.role != "admin":
+        raise HTTPException(status_code=403, detail="Access denied")

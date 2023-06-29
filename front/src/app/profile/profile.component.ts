@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserProfile } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import {ActivatedRoute} from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -10,15 +11,13 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  profile!: UserProfile;
+  profile$!: Observable<UserProfile>;
 
   constructor(private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
      let user_id: number = this.route.snapshot.params['user_id'];
-     this.userService.getUsersProfile(user_id).subscribe(
-        (data) => this.profile = data,
-      );
+     this.profile$ = this.userService.getUsersProfile(user_id);
   }
 
 }

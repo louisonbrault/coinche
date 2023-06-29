@@ -15,6 +15,7 @@ def create_user(db: Session, user: UserCreate) -> User:
     db_user = User(
         display_name=user.display_name,
         facebook_id=user.facebook_id,
+        role=user.role,
         slug_name=slugify(user.display_name)
     )
     db.add(db_user)

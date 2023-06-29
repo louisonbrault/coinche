@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from crud.user import create_user, get_stats_for_user, get_stats_for_users, list_users
 from database import get_db
 from schemas.user import User, UserCreate, UserProfile, UserStat
-from security.middlewares import has_role
+from security.middlewares import authenticate, has_role
 
 user_router = APIRouter()
 
@@ -32,8 +32,8 @@ def get_stats(db: Session = Depends(get_db)):
     200: {"description": "User created."},
     400: {"description": "User not created due to errors on request."}
 })
-@has_role("admin")
-def post_users(user: UserCreate, db: Session = Depends(get_db)):
+def post_users(user: UserCreate, logged_in_user: User = Depends(authenticate), db: Session = Depends(get_db)):
+    has_role("admin", logged_in_user)
     try:
         user = create_user(db=db, user=user)
     except IntegrityError:

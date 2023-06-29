@@ -53,7 +53,9 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut(): void {
-     this.socialAuthService.signOut();
+     this.socialAuthService.signOut().catch(function(error) {
+       void(0);
+     });
      this.logoutBackend();
   }
 
@@ -70,6 +72,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logoutBackend(): void {
+     this.loggedIn = false;
      ls.clear();
      this.store.dispatch(setUserLoggedIn({ isLoggedIn: false, role: "" }));
   }
