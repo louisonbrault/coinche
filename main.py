@@ -8,7 +8,7 @@ from routes.game import game_router
 from routes.user import user_router
 from routes.security import security_router
 
-app = FastAPI()
+app = FastAPI(openapi_url='/api/openapi.json')
 app.include_router(game_router)
 app.include_router(user_router)
 app.include_router(security_router)
