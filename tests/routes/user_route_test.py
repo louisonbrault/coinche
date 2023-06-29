@@ -5,7 +5,7 @@ from tests.conftest import override_get_db
 from database import get_db
 from main import app
 from routes.security import create_access_token
-from conftest import create_4_users, create_admin, create_user_test
+from tests.conftest import create_4_users, create_admin, create_user_test
 
 app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
