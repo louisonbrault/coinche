@@ -77,7 +77,7 @@ def login(authToken: AuthToken, db: Session = Depends(get_db)) -> AccessToken:
             update_user(db, user)
         # Si non, on le créé
         else:
-            user_create = UserCreate(display_name=name, facebook_id=user_facebook_id)
+            user_create = UserCreate(display_name=name, facebook_id=user_facebook_id, role="viewer")
             user = create_user(db, user_create)
 
     # L'authentification est réussie

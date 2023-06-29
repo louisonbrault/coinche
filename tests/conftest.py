@@ -42,6 +42,18 @@ def create_user_test(session: Session):
     return db_user
 
 
+def create_admin(session: Session):
+    db_user = User(
+        id=10,
+        slug_name="tyty",
+        display_name="tyty",
+        role="admin"
+    )
+    session.add(db_user)
+    session.commit()
+    return db_user
+
+
 def create_user_without_fb_test(session: Session):
     db_user = User(
         id=1,

@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -11,6 +12,12 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     pass
+
+
+class UserUpdate(BaseModel):
+    display_name: Optional[str]
+    facebook_id: Optional[str]
+    role: Optional[str]
 
 
 class User(UserBase):
