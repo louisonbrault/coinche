@@ -1,9 +1,11 @@
-name: build-front
+name: build-back
 
 on:
-  push:
-    branches:
-      - "main"
+  workflow_run:
+    workflows: ["test-back"]
+    branches: [main]
+    types:
+      - completed
 
 jobs:
   build:
