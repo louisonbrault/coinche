@@ -1,0 +1,19 @@
+name: deploy-do
+
+on:
+  workflow_run:
+    workflows: ["build-back", "build-front"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy Stage
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments
+        method: POST
+        bearerToken: ${{ secrets.DO_TOKEN }}
