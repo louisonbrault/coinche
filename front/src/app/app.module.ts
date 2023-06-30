@@ -43,6 +43,7 @@ import { authReducer } from './auth/auth.reducer';
 import { ScoreBoardComponent } from './score-board/score-board.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(fr);
 
@@ -95,7 +96,7 @@ registerLocaleData(fr);
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('499426098996343')
+            provider: new FacebookLoginProvider(environment.facebookAppId)
           }
         ],
         onError: (err) => {
