@@ -42,6 +42,7 @@ import { StoreModule } from '@ngrx/store';
 import { authReducer } from './auth/auth.reducer';
 import { ScoreBoardComponent } from './score-board/score-board.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 registerLocaleData(fr);
 
@@ -54,7 +55,8 @@ registerLocaleData(fr);
     SubHeaderComponent,
     NewGameComponent,
     ScoreBoardComponent,
-    ProfileComponent
+    ProfileComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
