@@ -12,5 +12,5 @@ class User(Base):
     creation_date = Column(Date, nullable=False, default=date.today())
     slug_name = Column(String, nullable=False, unique=True)
     display_name = Column(String, nullable=False)
-    facebook_id = Column(String, unique=True)
+    google_id = Column(String, unique=True)
     role = Column(String, nullable=False, default="writer")

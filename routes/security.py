@@ -10,16 +10,12 @@ from jose import jwt
 from slugify import slugify
 from sqlalchemy.orm import Session
 
-from crud.user import create_user, get_user_from_facebook_id, get_user_from_slug_name, update_user
+from crud.user import create_user, get_user_from_google_id, get_user_from_slug_name, update_user
 from database import get_db
 from schemas.security import AccessToken, AuthToken, HTTPError
 from schemas.user import UserCreate
 
-from security.facebook import \
-    TokenInvalidException, \
-    get_facebook_access_token, \
-    get_facebook_id_from_auth_token, \
-    get_facebook_name_from_facebook_id
+from security.google import get_user_info_from_token
 
 
 security_router = APIRouter()
@@ -54,30 +50,30 @@ def create_access_token(data: dict, expires_delta: timedelta = timedelta(minutes
 })
 def login(authToken: AuthToken, db: Session = Depends(get_db)) -> AccessToken:
     try:
-        access_token = get_facebook_access_token()
-        user_facebook_id = get_facebook_id_from_auth_token(access_token, authToken.authToken)
-    except TokenInvalidException:
+        user_info = get_user_info_from_token(authToken.authToken)
+        user_google_id = user_info.get("sub")
+    except ValueError:
         raise HTTPException(400, detail="Auth token provided is invalid")
     except Exception as e:
         logging.error(traceback.format_exception(e))
         raise HTTPException(503, detail="Impossible to get info from facebook")
 
     # On recherche dans la db si un utilisateur correspond à l'id facebook
-    user = get_user_from_facebook_id(db, user_facebook_id)
+    user = get_user_from_google_id(db, user_google_id)
 
     if not user:
-        name = get_facebook_name_from_facebook_id(access_token, user_facebook_id)
+        name = user_info.get("name")
 
         # On cherche si un utilisateur avec le même slugname existe déjà
         user = get_user_from_slug_name(db, slugify(name))
 
         # Si oui, on met à jour son id facebook
         if user:
-            user.facebook_id = user_facebook_id
+            user.google_id = user_google_id
             update_user(db, user)
         # Si non, on le créé
         else:
-            user_create = UserCreate(display_name=name, facebook_id=user_facebook_id, role="viewer")
+            user_create = UserCreate(display_name=name, google_id=user_google_id, role="viewer")
             user = create_user(db, user_create)
 
     # L'authentification est réussie

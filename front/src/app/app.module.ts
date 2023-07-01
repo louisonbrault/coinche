@@ -33,8 +33,7 @@ import { GameListComponent } from './game-list/game-list.component';
 import { HeaderComponent } from './header/header.component';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { FacebookLoginProvider} from '@abacritt/angularx-social-login';
-import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
+import { FacebookLoginProvider, GoogleLoginProvider, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { SubHeaderComponent } from './sub-header/sub-header.component';
 import { NewGameComponent } from './new-game/new-game.component';
 
@@ -83,7 +82,7 @@ registerLocaleData(fr);
     NzSelectModule,
     NzTableModule,
     SocialLoginModule,
-    CoolSocialLoginButtonsModule,
+    GoogleSigninButtonModule,
     StoreModule.forRoot({ auth: authReducer })
   ],
   providers: [
@@ -95,8 +94,8 @@ registerLocaleData(fr);
         autoLogin: false,
         providers: [
           {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider(environment.facebookAppId)
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(environment.googleAppId)
           }
         ],
         onError: (err) => {

@@ -35,7 +35,7 @@ def create_user_test(session: Session):
         id=1,
         slug_name="toto",
         display_name="toto",
-        facebook_id="123456"
+        google_id="123456"
     )
     session.add(db_user)
     session.commit()

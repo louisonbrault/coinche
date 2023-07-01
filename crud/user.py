@@ -14,7 +14,7 @@ def list_users(db: Session):
 def create_user(db: Session, user: UserCreate) -> User:
     db_user = User(
         display_name=user.display_name,
-        facebook_id=user.facebook_id,
+        google_id=user.google_id,
         role=user.role,
         slug_name=slugify(user.display_name)
     )
@@ -35,8 +35,8 @@ def get_user_from_id(db: Session, user_id: int) -> User:
     return db.get(User, user_id)
 
 
-def get_user_from_facebook_id(db: Session, facebook_id: str) -> User:
-    return db.query(User).filter(User.facebook_id == facebook_id).first()
+def get_user_from_google_id(db: Session, google_id: str) -> User:
+    return db.query(User).filter(User.google_id == google_id).first()
 
 
 def get_user_from_slug_name(db: Session, slug_name: str) -> User:

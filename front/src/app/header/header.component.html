@@ -3,10 +3,8 @@
     <a href=""><img src="/assets/img/logo.png" width="130px" class="logo"/></a>
   </div>
   <div nz-col nzSpan="8" class="login">
-    <cool-facebook-button *ngIf="!loggedIn" color="dark" (click)="signInWithFB()">
-      Login
-    </cool-facebook-button>
-    <a *ngIf="loggedIn && user" href="/profile/{{ userId }}"><nz-avatar nzSize="large" nzIcon="user" nzSrc="{{user.response.picture.data.url}}"></nz-avatar></a>
+    <asl-google-signin-button *ngIf="!loggedIn" type="icon" size="large" shape="pill"theme="outline"></asl-google-signin-button>
+    <a *ngIf="loggedIn && user" href="/profile/{{ userId }}"><nz-avatar nzSize="large" nzIcon="user" nzSrc="{{user.photoUrl}}"></nz-avatar></a>
     &nbsp;
     <button *ngIf="loggedIn" nz-button nzSize="large" nzType="default" nzShape="circle" (click)="signOut()" class="logout"><span nz-icon nzType="logout"></span></button>
 

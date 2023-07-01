@@ -6,34 +6,29 @@ from unittest.mock import patch
 
 from routes.security import login
 from schemas.security import AuthToken
-from security.facebook import TokenInvalidException
 
 from tests.conftest import create_user_test, create_user_without_fb_test
 
 
-@patch('routes.security.get_facebook_access_token')
-def test_login_facebook_api_down(mock_get_facebook_access_token):
-    mock_get_facebook_access_token.side_effect = Exception("Une exception")
+@patch('routes.security.get_user_info_from_token')
+def test_login_facebook_api_down(mock_get_user_info_from_token):
+    mock_get_user_info_from_token.side_effect = Exception("Une exception")
 
     with pytest.raises(HTTPException):
         login(None, None)
 
 
-@patch('routes.security.get_facebook_access_token')
-@patch('routes.security.get_facebook_id_from_auth_token')
-def test_login_invalid_token(mock_get_facebook_id_from_auth_token, mock_get_facebook_access_token):
-    mock_get_facebook_access_token.return_value = "eyJhbGciOiJIUzI1N...."
-    mock_get_facebook_id_from_auth_token.side_effect = TokenInvalidException()
+@patch('routes.security.get_user_info_from_token')
+def test_login_invalid_token(mock_get_user_info_from_token):
+    mock_get_user_info_from_token.side_effect = ValueError
 
     with pytest.raises(HTTPException):
         login(None, None)
 
 
-@patch('routes.security.get_facebook_access_token')
-@patch('routes.security.get_facebook_id_from_auth_token')
-def test_login_user_known(mock_get_facebook_id_from_auth_token, mock_get_facebook_access_token, session: Session):
-    mock_get_facebook_access_token.return_value = "499426098996..."
-    mock_get_facebook_id_from_auth_token.return_value = "123456"
+@patch('routes.security.get_user_info_from_token')
+def test_login_user_known(mock_get_user_info_from_token, session: Session):
+    mock_get_user_info_from_token.return_value = {"sub": "123456"}
 
     create_user_test(session)
 
@@ -44,18 +39,9 @@ def test_login_user_known(mock_get_facebook_id_from_auth_token, mock_get_faceboo
     assert token_dict.get("display_name") == "toto"
 
 
-@patch('routes.security.get_facebook_access_token')
-@patch('routes.security.get_facebook_id_from_auth_token')
-@patch('routes.security.get_facebook_name_from_facebook_id')
-def test_login_user_unknown_with_same_slug(
-        mock_get_facebook_name_from_facebook_id,
-        mock_get_facebook_id_from_auth_token,
-        mock_get_facebook_access_token,
-        session: Session
-):
-    mock_get_facebook_access_token.return_value = "499426098996..."
-    mock_get_facebook_id_from_auth_token.return_value = "123456"
-    mock_get_facebook_name_from_facebook_id.return_value = "toto"
+@patch('routes.security.get_user_info_from_token')
+def test_login_user_unknown_with_same_slug(mock_get_user_info_from_token, session: Session):
+    mock_get_user_info_from_token.return_value = {"sub": "123456", "name": "toto"}
 
     create_user_without_fb_test(session)
 
@@ -66,18 +52,9 @@ def test_login_user_unknown_with_same_slug(
     assert token_dict.get("display_name") == "toto"
 
 
-@patch('routes.security.get_facebook_access_token')
-@patch('routes.security.get_facebook_id_from_auth_token')
-@patch('routes.security.get_facebook_name_from_facebook_id')
-def test_login_user_totaly_unknown(
-        mock_get_facebook_name_from_facebook_id,
-        mock_get_facebook_id_from_auth_token,
-        mock_get_facebook_access_token,
-        session: Session
-):
-    mock_get_facebook_access_token.return_value = "499426098996..."
-    mock_get_facebook_id_from_auth_token.return_value = "123456"
-    mock_get_facebook_name_from_facebook_id.return_value = "tata"
+@patch('routes.security.get_user_info_from_token')
+def test_login_user_totaly_unknown(mock_get_user_info_from_token, session: Session):
+    mock_get_user_info_from_token.return_value = {"sub": "123456", "name": "tata"}
 
     create_user_without_fb_test(session)
 

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialAuthService } from "@abacritt/angularx-social-login";
-import { SocialUser } from "@abacritt/angularx-social-login";
-import { FacebookLoginProvider } from "@abacritt/angularx-social-login";
+import { FacebookLoginProvider, GoogleSigninButtonDirective, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import { Observable } from 'rxjs';
 import { Auth } from '../models/auth.model';
 import { AuthService } from '../auth/auth.service';
@@ -39,19 +37,6 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  fbLoginOptions = {
-        scope: 'public_profile',
-        locale: 'fr_FR',
-        return_scopes: true,
-        enable_profile_selector: true,
-        fields: 'name,email,picture,first_name,last_name,accounts',
-        version: 'v17.0',
-  };
-
-  signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, this.fbLoginOptions);
-  }
-
   signOut(): void {
      this.socialAuthService.signOut().catch(function(error) {
        void(0);
@@ -60,10 +45,10 @@ export class HeaderComponent implements OnInit {
   }
 
   loginBackend(user: SocialUser): void {
-    this.authService.login(user.authToken).subscribe(
+    this.authService.login(user.idToken).subscribe(
     (payload: Auth) => {
       ls.set('access_token', payload.access_token, { ttl: payload.expires });
-      ls.set('user_photo_url', user.response.picture.data.url, { ttl: payload.expires });
+      ls.set('user_photo_url', user.photoUrl, { ttl: payload.expires });
       this.store.dispatch(setUserLoggedIn({ isLoggedIn: user != null, role: this.getUserRole(payload.access_token) }));
       this.userId = this.getUserId(payload.access_token);
     },
@@ -84,7 +69,7 @@ export class HeaderComponent implements OnInit {
      }
      var response = {picture: {data: {url: ls.get('user_photo_url')}}}
      this.user = new SocialUser();
-     this.user.response = response;
+     this.user.photoUrl = ls.get('user_photo_url') || "";
      this.loggedIn = true;
      this.store.dispatch(setUserLoggedIn({ isLoggedIn: true, role: this.getUserRole(access_token) }));
      this.userId = this.getUserId(access_token);

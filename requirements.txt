@@ -3,6 +3,7 @@ coverage
 fastapi
 fastapi-auth
 flake8
+google-auth
 httpx
 psycopg2-binary
 pydantic

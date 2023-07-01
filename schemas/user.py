@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 class UserBase(BaseModel):
     display_name: str
-    facebook_id: str = None
+    google_id: str = None
     role: str = "writer"
 
 
@@ -16,7 +16,7 @@ class UserCreate(UserBase):
 
 class UserUpdate(BaseModel):
     display_name: Optional[str]
-    facebook_id: Optional[str]
+    google_id: Optional[str]
     role: Optional[str]
 
 

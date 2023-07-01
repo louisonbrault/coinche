@@ -24,14 +24,14 @@ def test_update_user_no_auth(session: Session):
 def test_update_user_that_not_exists(session: Session):
     create_user_test(session)
     jwt = create_access_token({"user_id": 1})
-    response = client.put("/users/2", headers={"Authorization": f"Bearer {jwt}"}, json={"facebook_id": 0})
+    response = client.put("/users/2", headers={"Authorization": f"Bearer {jwt}"}, json={"google_id": 0})
     assert response.status_code == 404
 
 
 def test_update_user_without_right(session: Session):
     create_4_users(session)
     jwt = create_access_token({"user_id": 1})
-    response = client.put("/users/2", headers={"Authorization": f"Bearer {jwt}"}, json={"facebook_id": 0})
+    response = client.put("/users/2", headers={"Authorization": f"Bearer {jwt}"}, json={"google_id": 0})
     assert response.status_code == 403
 
 
@@ -54,6 +54,6 @@ def test_update_user_admin(session: Session):
     create_4_users(session)
     create_admin(session)
     jwt = create_access_token({"user_id": 10})
-    response = client.put("/users/2", headers={"Authorization": f"Bearer {jwt}"}, json={"facebook_id": 0})
+    response = client.put("/users/2", headers={"Authorization": f"Bearer {jwt}"}, json={"google_id": 0})
     assert response.status_code == 200
-    assert response.json().get("facebook_id") == "0"
+    assert response.json().get("google_id") == "0"
