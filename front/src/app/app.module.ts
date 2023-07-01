@@ -29,11 +29,12 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { GameListComponent } from './game-list/game-list.component';
 import { HeaderComponent } from './header/header.component';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { FacebookLoginProvider, GoogleLoginProvider, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { FacebookLoginProvider, GoogleInitOptions, GoogleLoginProvider, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { SubHeaderComponent } from './sub-header/sub-header.component';
 import { NewGameComponent } from './new-game/new-game.component';
 
@@ -43,8 +44,13 @@ import { ScoreBoardComponent } from './score-board/score-board.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { environment } from 'src/environments/environment';
+import { RulesComponent } from './rules/rules.component';
 
 registerLocaleData(fr);
+
+const googleLoginOptions: GoogleInitOptions = {
+  oneTapEnabled: false
+};
 
 @NgModule({
   declarations: [
@@ -56,7 +62,8 @@ registerLocaleData(fr);
     NewGameComponent,
     ScoreBoardComponent,
     ProfileComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,
@@ -81,6 +88,7 @@ registerLocaleData(fr);
     NzRateModule,
     NzSelectModule,
     NzTableModule,
+    NzTypographyModule,
     SocialLoginModule,
     GoogleSigninButtonModule,
     StoreModule.forRoot({ auth: authReducer })
@@ -95,7 +103,7 @@ registerLocaleData(fr);
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.googleAppId)
+            provider: new GoogleLoginProvider(environment.googleAppId, googleLoginOptions)
           }
         ],
         onError: (err) => {

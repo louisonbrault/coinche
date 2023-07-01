@@ -4,10 +4,11 @@ import { AuthState } from './auth.states';
 
 const initialState: AuthState = {
   userLoggedIn: false,
-  role: ""
+  role: "",
+  id: 0
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(setUserLoggedIn, (state, { isLoggedIn, role }) => ({ ...state, userLoggedIn: isLoggedIn, role: role })),
+  on(setUserLoggedIn, (state, { isLoggedIn, role, id }) => ({ ...state, userLoggedIn: isLoggedIn, role: role, id: id })),
 );

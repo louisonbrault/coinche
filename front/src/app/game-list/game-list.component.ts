@@ -23,7 +23,7 @@ export class GameListComponent implements OnInit {
   private gameService: GameService, private store: Store<{ auth: AuthState }>) {}
 
   ngOnInit(): void {
-    this.games$ = this.gameService.getAllGames(0, 5);
+    this.games$ = this.gameService.getAllGames(0, 3);
     this.userLoggedIn$ = this.store.pipe(select(state => state.auth.userLoggedIn));
     this.userLoggedIn$.subscribe(userLoggedIn => {
       this.userLoggedIn = userLoggedIn;

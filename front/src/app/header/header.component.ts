@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FacebookLoginProvider, GoogleSigninButtonDirective, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
+import { FacebookLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import { Observable } from 'rxjs';
 import { Auth } from '../models/auth.model';
 import { AuthService } from '../auth/auth.service';
@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
     (payload: Auth) => {
       ls.set('access_token', payload.access_token, { ttl: payload.expires });
       ls.set('user_photo_url', user.photoUrl, { ttl: payload.expires });
-      this.store.dispatch(setUserLoggedIn({ isLoggedIn: user != null, role: this.getUserRole(payload.access_token) }));
+      this.store.dispatch(setUserLoggedIn({ isLoggedIn: user != null, role: this.getUserRole(payload.access_token), id: this.getUserId(payload.access_token) }));
       this.userId = this.getUserId(payload.access_token);
     },
     err => this.signOut()
@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
   logoutBackend(): void {
      this.loggedIn = false;
      ls.clear();
-     this.store.dispatch(setUserLoggedIn({ isLoggedIn: false, role: "" }));
+     this.store.dispatch(setUserLoggedIn({ isLoggedIn: false, role: "", id: 0 }));
   }
 
   checkIfUserIsAlreadyLoggedIn(): void {
@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit {
      this.user = new SocialUser();
      this.user.photoUrl = ls.get('user_photo_url') || "";
      this.loggedIn = true;
-     this.store.dispatch(setUserLoggedIn({ isLoggedIn: true, role: this.getUserRole(access_token) }));
+     this.store.dispatch(setUserLoggedIn({ isLoggedIn: true, role: this.getUserRole(access_token), id: this.getUserId(access_token) }));
      this.userId = this.getUserId(access_token);
   }
 

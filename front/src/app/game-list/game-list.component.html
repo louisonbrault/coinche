@@ -1,11 +1,9 @@
-<div class="main-container">
-  <app-game *ngFor="let game of games$ | async" [game]="game"></app-game>
-</div>
-<div *ngIf="userLoggedIn && (userRole == 'writer' || userRole == 'admin')" class="button-container">
+<app-game *ngFor="let game of games$ | async" [game]="game"></app-game>
+<footer *ngIf="userLoggedIn && (userRole == 'writer' || userRole == 'admin')" class="button-container">
   <a href="create">
     <button nz-button nzType="primary" nzShape="circle" class="button" nzSize="large">
       <span nz-icon nzType="plus"></span>
     </button>
   </a>
-</div>
+</footer>
 

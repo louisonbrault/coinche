@@ -1,7 +1,8 @@
 <div *ngIf="profile$ | async as profile">
   <div nz-row class="margin-top-10 font-size-16">
     <div nz-col nzSpan="20" nzOffset="2" class="center-text">
-      <div class="margin-left-4">{{ profile.display_name }}</div>
+      <div *ngIf="canUpdate(profile)" class="margin-left-4 font-size-20"><p nz-typography nzEditable [(nzContent)]="profile.display_name" (nzContentChange)="onContentChanged(profile.id, $event)"></p></div>
+      <div *ngIf="!canUpdate(profile)" class="margin-left-4 font-size-20">{{ profile.display_name }}</div>
       <div class="margin-left-4"><span class="green">{{ profile.wins }}</span> / <span class="red">{{  profile.games - profile.wins }}</span></div>
       <div *ngIf="profile.games > 0" class="margin-left-4">{{ (profile.stars / profile.games).toFixed(2) }} ⭐</div>
     </div>

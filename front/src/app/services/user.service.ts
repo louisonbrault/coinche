@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserLight, UserProfile, UserStat } from '../models/user.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import ls from 'localstorage-slim';
 
 
 @Injectable({
@@ -26,6 +27,14 @@ export class UserService {
 
   getUsersProfile(user_id: number): Observable<UserProfile> {
       return this.http.get<UserProfile>(`${this.apiUrl}/users/${user_id}`);
+  }
+
+  modifyDisplayName(user_id: number, display_name: string): Observable<UserLight>{
+      var access_token = ls.get('access_token');
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${access_token}`
+        });
+      return this.http.put<UserLight>(`${this.apiUrl}/users/${user_id}`, {display_name: display_name}, {headers: headers});
   }
 
 
