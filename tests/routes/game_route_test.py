@@ -2,7 +2,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 import pytest
 
-from tests.conftest import create_4_users, override_get_db, valid_game_data
+from tests.conftest import \
+    complex_data, create_admin, create_user_test, create_4_users, override_get_db, valid_game_data
 from database import get_db
 from main import app
 from routes.security import create_access_token
@@ -31,3 +32,26 @@ def test_create_game(session: Session, jwt: str, response_code: int):
     body = valid_game_data()
     response = client.post("/games", headers={"Authorization": f"Bearer {jwt}"}, json=body)
     assert response.status_code == response_code
+
+
+def test_update_game_404(session: Session):
+    create_user_test(session)
+    jwt = create_access_token({"user_id": 1})
+    response = client.put("/games/1", headers={"Authorization": f"Bearer {jwt}"}, json=valid_game_data())
+    assert response.status_code == 404
+
+
+def test_update_game_403(session: Session):
+    complex_data(session)
+    jwt = create_access_token({"user_id": 2})
+    response = client.put("/games/1", headers={"Authorization": f"Bearer {jwt}"}, json=valid_game_data())
+    assert response.status_code == 403
+
+
+def test_update_game_admin(session: Session):
+    complex_data(session)
+    create_admin(session)
+    jwt = create_access_token({"user_id": 10})
+    response = client.put("/games/1", headers={"Authorization": f"Bearer {jwt}"}, json=valid_game_data())
+    assert response.status_code == 200
+    assert response.json().get("score_b") == 800

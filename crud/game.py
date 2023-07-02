@@ -18,9 +18,20 @@ def list_games(db: Session, user_id: int = None, skip: int = 0, limit: int = 100
     return query.all()
 
 
+def get_game_from_id(db: Session, game_id: int) -> GameModel:
+    return db.get(GameModel, game_id)
+
+
 def create_game(db: Session, game: GameCreate, creator_id: int):
     db_game = GameModel(**game.dict(), creator=creator_id)
     db.add(db_game)
     db.commit()
     db.refresh(db_game)
     return db_game
+
+
+def update_game(db: Session, game: GameModel) -> GameModel:
+    db.merge(game)
+    db.commit()
+    db.refresh(game)
+    return game
