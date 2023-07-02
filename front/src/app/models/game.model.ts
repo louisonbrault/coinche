@@ -15,3 +15,11 @@ export class Game {
     a_won!: Boolean
     b_won!: Boolean
 }
+
+export class GamesResponse {
+  total!: number
+  page!: number
+  size!: number
+  pages!: number
+  items!: [Game]
+}

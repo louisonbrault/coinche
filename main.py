@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi_pagination import add_pagination
 import uvicorn
 
 from routes.game import game_router
@@ -11,6 +12,7 @@ app = FastAPI()
 app.include_router(game_router)
 app.include_router(user_router)
 app.include_router(security_router)
+add_pagination(app)
 
 app.add_middleware(
     CORSMiddleware,

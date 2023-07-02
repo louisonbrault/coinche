@@ -1,4 +1,4 @@
-
+from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
@@ -6,16 +6,18 @@ from models.game import Game as GameModel
 from schemas.game import GameCreate
 
 
-def list_games(db: Session, user_id: int = None, skip: int = 0, limit: int = 100):
-    query = db.query(GameModel).order_by(GameModel.date.desc(), GameModel.id.desc()).offset(skip).limit(limit)
+def list_games(db: Session, user_id: int = None, creator_id: int = None):
+    query = db.query(GameModel).order_by(GameModel.date.desc(), GameModel.id.desc())
     if user_id:
         query = query.filter(or_(
-            GameModel.player_a1 == user_id,
-            GameModel.player_a2 == user_id,
-            GameModel.player_b1 == user_id,
-            GameModel.player_b2 == user_id,
+            GameModel.player_a1_id == user_id,
+            GameModel.player_a2_id == user_id,
+            GameModel.player_b1_id == user_id,
+            GameModel.player_b2_id == user_id,
         ))
-    return query.all()
+    if creator_id:
+        query = query.filter(GameModel.creator == creator_id)
+    return paginate(query)
 
 
 def get_game_from_id(db: Session, game_id: int) -> GameModel:

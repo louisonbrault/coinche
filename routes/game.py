@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi_pagination import Page
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -11,9 +12,13 @@ from security.middlewares import authenticate, has_role
 game_router = APIRouter()
 
 
-@game_router.get("/games", response_model=list[GameUserInfo], tags=["Games"])
-def get_games(user_id: int = None, skip: int = None, limit: int = None, db: Session = Depends(get_db)):
-    games = list_games(db, user_id=user_id, skip=skip, limit=limit)
+@game_router.get("/games", response_model=Page[GameUserInfo], tags=["Games"])
+def get_games(
+        user_id: int = Query(None, description="Get all games the player has participated in"),
+        creator_id: int = Query(None, description="Get all games created by the user"),
+        db: Session = Depends(get_db)
+):
+    games = list_games(db, user_id=user_id, creator_id=creator_id)
     return games
 
 

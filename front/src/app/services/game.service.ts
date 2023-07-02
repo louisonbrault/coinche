@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Game } from '../models/game.model';
+import { Game, GamesResponse } from '../models/game.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import ls from 'localstorage-slim';
@@ -18,8 +18,8 @@ export class GameService {
 
   }
 
-  getAllGames(skip: number, limit: number): Observable<Game[]> {
-      return this.http.get<Game[]>(`${this.apiUrl}/games?skip=${skip}&limit=${limit}`);
+  getAllGames(page: number, size: number): Observable<GamesResponse> {
+      return this.http.get<GamesResponse>(`${this.apiUrl}/games?page=${page}&size=${size}`);
   }
 
   addGame(

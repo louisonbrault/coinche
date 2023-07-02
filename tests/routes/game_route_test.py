@@ -12,6 +12,18 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
+def test_filter_by_user(session: Session):
+    complex_data(session)
+    response = client.get("/games?user_id=2")
+    assert response.json().get("total") == 5
+
+
+def test_filter_by_creator(session: Session):
+    complex_data(session)
+    response = client.get("/games?creator_id=2")
+    assert response.json().get("total") == 0
+
+
 def test_create_game_without_bearer(session: Session):
     create_4_users(session)
     body = valid_game_data()

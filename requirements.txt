@@ -2,6 +2,7 @@ alembic
 coverage
 fastapi
 fastapi-auth
+fastapi-pagination
 flake8
 google-auth
 httpx
