@@ -30,7 +30,7 @@ import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { GameListComponent } from './game-list/game-list.component';
+import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
@@ -56,7 +56,7 @@ const googleLoginOptions: GoogleInitOptions = {
   declarations: [
     AppComponent,
     GameComponent,
-    GameListComponent,
+    HomeComponent,
     HeaderComponent,
     SubHeaderComponent,
     NewGameComponent,

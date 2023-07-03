@@ -7,11 +7,11 @@ import { Store, select } from '@ngrx/store';
 import { AuthState } from '../auth/auth.states';
 
 @Component({
-  selector: 'app-game-list',
-  templateUrl: './game-list.component.html',
-  styleUrls: ['./game-list.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class GameListComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   gamesResponse$!: Observable<GamesResponse>;
   userLoggedIn$!: Observable<boolean>;

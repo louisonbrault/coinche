@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GameListComponent } from './game-list/game-list.component';
+import { HomeComponent } from './home/home.component';
 import { NewGameComponent } from './new-game/new-game.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ScoreBoardComponent } from './score-board/score-board.component';
@@ -8,7 +8,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { RulesComponent } from './rules/rules.component'
 
 const routes: Routes = [
-  { path: '', component: GameListComponent },
+  { path: '', component: HomeComponent },
   { path: 'create', component: NewGameComponent },
   { path: 'profile/:user_id', component: ProfileComponent },
   { path: 'score-board', component: ScoreBoardComponent },
