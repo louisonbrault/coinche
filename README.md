@@ -8,6 +8,9 @@
 This is a personal project that I develop on my free time. It's a web application which wants to show us who is the best 
 Belote player between my teammates.
 
+## Plateforme
+This website is optimized for a mobile screen. It does not look good on a laptop.
+
 ## Hosting
 The application is hosted on a Digital Ocean App. The public url is https://teamboulding.fr.
 
