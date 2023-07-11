@@ -1,0 +1,8 @@
+<div *ngIf="userLoggedInId" class="center-text margin-top-10 margin-bottom-10">
+  <label nz-checkbox [(ngModel)]="onlyMyGames" (ngModelChange)="onMyGamesChange()">Mes parties</label>
+  <label nz-checkbox [(ngModel)]="onlyMyCreatedGames" (ngModelChange)="onMyGamesChange()">Parties que j'ai créé</label>
+</div>
+<div *ngIf="gamesResponse$ | async as gamesResponse">
+  <app-game *ngFor="let game of gamesResponse.items" [game]="game"></app-game>
+  <nz-pagination [nzPageIndex]="currentPage" [nzPageSize]="gamesResponse.size" [nzTotal]="gamesResponse.total" class="margin-top-10 center-text" (nzPageIndexChange)="onPageChange($event)"></nz-pagination>
+</div>
