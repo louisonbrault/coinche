@@ -10,7 +10,7 @@ export class SubHeaderComponent implements OnInit {
 
   homeActive!: boolean;
   scoreActive!: boolean;
-  historyActive!: boolean;
+  gamesActive!: boolean;
   rulesActive!: boolean;
 
   constructor(private location: Location) { }
@@ -18,7 +18,7 @@ export class SubHeaderComponent implements OnInit {
   ngOnInit(): void {
     this.homeActive = this.location.path() == "" || this.location.path() == "/" || this.location.path() == "/create";
     this.scoreActive = this.location.path() == "/score-board";
-    this.historyActive = this.location.path() == "/history";
+    this.gamesActive = this.location.path() == "/games";
     this.rulesActive = this.location.path() == "/rules";
   }
 

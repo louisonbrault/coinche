@@ -18,8 +18,15 @@ export class GameService {
 
   }
 
-  getAllGames(page: number, size: number): Observable<GamesResponse> {
-      return this.http.get<GamesResponse>(`${this.apiUrl}/games?page=${page}&size=${size}`);
+  getAllGames(page: number, size: number, options?: {userId?: number, creatorId?: number}): Observable<GamesResponse> {
+      var filterString = "";
+      if (typeof options !== 'undefined' && typeof options.userId !== 'undefined') {
+        filterString += `&user_id=${options.userId}`;
+      }
+      if (typeof options !== 'undefined' && typeof options.creatorId !== 'undefined') {
+        filterString += `&creator_id=${options.creatorId}`;
+      }
+      return this.http.get<GamesResponse>(`${this.apiUrl}/games?page=${page}&size=${size}${filterString}`);
   }
 
   addGame(

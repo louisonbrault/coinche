@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -25,6 +26,7 @@ import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -45,6 +47,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { environment } from 'src/environments/environment';
 import { RulesComponent } from './rules/rules.component';
+import { GameListComponent } from './game-list/game-list.component';
 
 registerLocaleData(fr);
 
@@ -63,7 +66,8 @@ const googleLoginOptions: GoogleInitOptions = {
     ScoreBoardComponent,
     ProfileComponent,
     PrivacyPolicyComponent,
-    RulesComponent
+    RulesComponent,
+    GameListComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +79,7 @@ const googleLoginOptions: GoogleInitOptions = {
     NzAvatarModule,
     NzButtonModule,
     NzCardModule,
+    NzCheckboxModule,
     NzDatePickerModule,
     NzDividerModule,
     NzFormModule,
@@ -84,6 +89,7 @@ const googleLoginOptions: GoogleInitOptions = {
     NzInputModule,
     NzInputNumberModule,
     NzNotificationModule,
+    NzPaginationModule,
     NzRadioModule,
     NzRateModule,
     NzSelectModule,
