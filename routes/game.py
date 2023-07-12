@@ -3,7 +3,7 @@ from fastapi_pagination import Page
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from crud.game import create_game, get_game_from_id, list_games, update_game
+from crud.game import create_game, delete_game, get_game_from_id, list_games, update_game
 from database import get_db
 from models.user import User
 from schemas.game import Game, GameCreate, GameUserInfo
@@ -22,6 +22,14 @@ def get_games(
     return games
 
 
+@game_router.get("/games/{game_id}", response_model=GameUserInfo, tags=["Games"])
+def get_game(game_id: int, db: Session = Depends(get_db)):
+    game_in_db = get_game_from_id(db, game_id)
+    if not game_in_db:
+        raise HTTPException(status_code=404, detail="Game not found")
+    return game_in_db
+
+
 @game_router.put("/games/{game_id}", response_model=GameUserInfo, tags=["Games"])
 def modify_games(
         game_id: int,
@@ -38,6 +46,16 @@ def modify_games(
     for attr in new_attributes.keys():
         setattr(game_in_db, attr, new_attributes.get(attr))
     return update_game(db, game_in_db)
+
+
+@game_router.delete("/games/{game_id}", tags=["Games"])
+def remove_game(game_id: int, logged_in_user: User = Depends(authenticate), db: Session = Depends(get_db)):
+    game_in_db = get_game_from_id(db, game_id)
+    if not game_in_db:
+        raise HTTPException(status_code=404, detail="Game not found")
+    if logged_in_user.role != "admin" and logged_in_user.id != game_in_db.creator:
+        raise HTTPException(status_code=403, detail="You can't delete this game")
+    return delete_game(db, game_in_db)
 
 
 @game_router.post("/games", response_model=Game, tags=["Games"], responses={

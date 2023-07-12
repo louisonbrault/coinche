@@ -67,3 +67,39 @@ def test_update_game_admin(session: Session):
     response = client.put("/games/1", headers={"Authorization": f"Bearer {jwt}"}, json=valid_game_data())
     assert response.status_code == 200
     assert response.json().get("score_b") == 800
+
+
+def test_get_game_404():
+    response = client.get("/games/1")
+    assert response.status_code == 404
+
+
+def test_get_game(session: Session):
+    complex_data(session)
+    response = client.get("/games/1")
+    assert response.status_code == 200
+    assert response.json().get("score_a") == 1600
+
+
+def test_delete_game_404(session: Session):
+    create_user_test(session)
+    jwt = create_access_token({"user_id": 1})
+    response = client.delete("/games/1", headers={"Authorization": f"Bearer {jwt}"})
+    assert response.status_code == 404
+
+
+def test_delete_game_403(session: Session):
+    complex_data(session)
+    jwt = create_access_token({"user_id": 2})
+    response = client.delete("/games/1", headers={"Authorization": f"Bearer {jwt}"})
+    assert response.status_code == 403
+
+
+def test_delete_game_admin(session: Session):
+    complex_data(session)
+    create_admin(session)
+    jwt = create_access_token({"user_id": 10})
+    response = client.delete("/games/1", headers={"Authorization": f"Bearer {jwt}"})
+    assert response.status_code == 200
+    response = client.get("/games")
+    assert response.json().get("total") == 4

@@ -3,6 +3,11 @@
   <label nz-checkbox [(ngModel)]="onlyMyCreatedGames" (ngModelChange)="onMyGamesChange()">Parties que j'ai créé</label>
 </div>
 <div *ngIf="gamesResponse$ | async as gamesResponse">
-  <app-game *ngFor="let game of gamesResponse.items" [game]="game"></app-game>
+  <div *ngFor="let game of gamesResponse.items">
+    <a href="/games/{{ game.id }}" *ngIf="game.creator == userLoggedInId || userRole == 'admin'">
+      <app-game [game]="game"></app-game>
+    </a>
+    <app-game *ngIf="game.creator != userLoggedInId && userRole != 'admin'" [game]="game"></app-game>
+  </div>
   <nz-pagination [nzPageIndex]="currentPage" [nzPageSize]="gamesResponse.size" [nzTotal]="gamesResponse.total" class="margin-top-10 center-text" (nzPageIndexChange)="onPageChange($event)"></nz-pagination>
 </div>

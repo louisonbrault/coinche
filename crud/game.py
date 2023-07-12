@@ -37,3 +37,8 @@ def update_game(db: Session, game: GameModel) -> GameModel:
     db.commit()
     db.refresh(game)
     return game
+
+
+def delete_game(db: Session, game: GameModel):
+    db.delete(game)
+    db.commit()

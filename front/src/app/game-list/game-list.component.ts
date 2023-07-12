@@ -16,6 +16,8 @@ export class GameListComponent {
   gamesResponse$!: Observable<GamesResponse>;
   userLoggedInId$!: Observable<number>;
   userLoggedInId!: number;
+  userRole$!: Observable<string>;
+  userRole!: string;
 
   onlyMyGames: Boolean = false;
   onlyMyCreatedGames: Boolean = false;
@@ -31,6 +33,11 @@ export class GameListComponent {
     this.userLoggedInId$ = this.store.pipe(select(state => state.auth.id));
     this.userLoggedInId$.subscribe(id => {
       this.userLoggedInId = id;
+    });
+
+    this.userRole$ = this.store.pipe(select(state => state.auth.role));
+    this.userRole$.subscribe(userRole => {
+      this.userRole = userRole;
     });
   }
 

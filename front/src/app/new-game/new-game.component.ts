@@ -4,7 +4,7 @@ import { UserService } from '../services/user.service';
 import { GameService } from '../services/game.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/notification';
 import { Store, select } from '@ngrx/store';
 import { AuthState } from '../auth/auth.states';
@@ -23,6 +23,9 @@ export class NewGameComponent implements OnInit {
   userRole$!: Observable<string>;
   userRole!: string;
 
+  redirectUri!: string;
+  gameId?: number;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private userService: UserService,
@@ -33,9 +36,13 @@ export class NewGameComponent implements OnInit {
     private store: Store<{ auth: AuthState }>) { }
 
   ngOnInit(): void {
+    this.gameId = this.route.snapshot.params['game_id'];
+
     this.userService.getAllUsers().subscribe(
       (data) => this.users = data,
     );
+
+    this.redirectUri = this.router.url.includes("create") ? "/" : "/games";
 
     this.gameForm = this.formBuilder.group({
       player_a1_id: [null, Validators.required],
@@ -53,6 +60,8 @@ export class NewGameComponent implements OnInit {
       validator: checkPlayerValidator('player_a1_id', 'player_a2_id', 'player_b1_id', 'player_b2_id')
     });
 
+    this.initForm();
+
     this.userLoggedIn$ = this.store.pipe(select(state => state.auth.userLoggedIn));
     this.userLoggedIn$.subscribe(userLoggedIn => this.userLoggedIn = userLoggedIn);
 
@@ -60,18 +69,54 @@ export class NewGameComponent implements OnInit {
     this.userRole$.subscribe(userRole => this.userRole = userRole);
   }
 
+  initForm(): void{
+    if (this.gameId == null){
+      return;
+    }
+    this.gameService.getGame(this.gameId).subscribe(
+      (data) => {
+        this.gameForm.patchValue({
+          player_a1_id: data.player_a1.id.toString(),
+          player_a2_id: data.player_a2.id.toString(),
+          player_b1_id: data.player_b1.id.toString(),
+          player_b2_id: data.player_b2.id.toString(),
+          score_a: data.score_a,
+          score_b: data.score_b,
+          stars_a: data.stars_a,
+          stars_b: data.stars_b,
+          date: data.date,
+          winner: data.a_won ? "A" : "B"
+        });
+      },
+      (error) => sendErrorMessage(this.notification, "SERVER_ERROR")
+    );
+  }
+
   onSubmitForm(){
     if (this.gameForm.valid) {
-      this.gameService.addGame(this.gameForm.value).subscribe(
-      (data) => this.router.navigateByUrl(""),
-      (error) => {
-          if(error.status == 422){
-            sendErrorMessage(this.notification, "VALIDATION_ERROR");
-          } else {
-            sendErrorMessage(this.notification, "SERVER_ERROR");
+      if (this.gameId){
+        this.gameService.modifyGame(this.gameId, this.gameForm.value).subscribe(
+        (data) => this.router.navigateByUrl(this.redirectUri),
+        (error) => {
+            if(error.status == 422){
+              sendErrorMessage(this.notification, "VALIDATION_ERROR");
+            } else {
+              sendErrorMessage(this.notification, "SERVER_ERROR");
+            }
           }
+        );
+      } else {
+        this.gameService.addGame(this.gameForm.value).subscribe(
+        (data) => this.router.navigateByUrl(this.redirectUri),
+        (error) => {
+            if(error.status == 422){
+              sendErrorMessage(this.notification, "VALIDATION_ERROR");
+            } else {
+              sendErrorMessage(this.notification, "SERVER_ERROR");
+            }
+          }
+        );
       }
-    );
     } else {
       sendErrorMessage(this.notification, "FORM_ERROR");
       Object.values(this.gameForm.controls).forEach(control => {
@@ -81,6 +126,14 @@ export class NewGameComponent implements OnInit {
         }
       });
     }
+  }
+
+  deleteGame(){
+    let gameId:number = this.gameId!;
+    this.gameService.deleteGame(gameId).subscribe(
+      (data) => this.router.navigateByUrl(this.redirectUri),
+      (error) => sendErrorMessage(this.notification, "SERVER_ERROR")
+      );
   }
 }
 
@@ -106,7 +159,7 @@ export function sendErrorMessage(notification: NzNotificationService, errorType:
   switch(errorType) {
    case "FORM_ERROR": {
       notification.error(
-        "Impossible de créer la partie",
+        "Données invalides",
         "Vérifie que les joueurs sont différents, que le score et correct et que tu as coché une équipe gagnante",
         { nzPlacement: 'bottom' }
       );
@@ -114,7 +167,7 @@ export function sendErrorMessage(notification: NzNotificationService, errorType:
    }
    case "VALIDATION_ERROR": {
       notification.error(
-        "Impossible de créer la partie",
+        "Données invalides",
         "Vérifie que le score et les étoiles sont correctes",
         { nzPlacement: 'bottom' }
       );
@@ -122,7 +175,7 @@ export function sendErrorMessage(notification: NzNotificationService, errorType:
    }
    case "SERVER_ERROR": {
       notification.error(
-        "Impossible de créer la partie",
+        "Impossible de créer ou modifier la partie",
         "Problème serveur 💣",
         { nzPlacement: 'bottom' }
       );

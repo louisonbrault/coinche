@@ -14,8 +14,8 @@ import { AuthState } from '../auth/auth.states';
 export class HomeComponent implements OnInit {
 
   gamesResponse$!: Observable<GamesResponse>;
-  userLoggedIn$!: Observable<boolean>;
-  userLoggedIn!: Boolean;
+  userLoggedInId$!: Observable<number>;
+  userLoggedInId!: number;
   userRole$!: Observable<string>;
   userRole!: string;
 
@@ -24,9 +24,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.gamesResponse$ = this.gameService.getAllGames(1, 3);
-    this.userLoggedIn$ = this.store.pipe(select(state => state.auth.userLoggedIn));
-    this.userLoggedIn$.subscribe(userLoggedIn => {
-      this.userLoggedIn = userLoggedIn;
+    this.userLoggedInId$ = this.store.pipe(select(state => state.auth.id));
+    this.userLoggedInId$.subscribe(id => {
+      this.userLoggedInId = id;
     });
 
     this.userRole$ = this.store.pipe(select(state => state.auth.role));

@@ -3,7 +3,7 @@ import { UserLight } from "./user.model";
 export class Game {
     id!: number
     date!: Date
-    creator_id!: number
+    creator!: number
     player_a1!: UserLight
     player_a2!: UserLight
     player_b1!: UserLight

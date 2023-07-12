@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'score-board', component: ScoreBoardComponent },
   { path: 'rules', component: RulesComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: 'games', component: GameListComponent }
+  { path: 'games', component: GameListComponent },
+  { path: 'games/:game_id', component: NewGameComponent },
 ];
 
 @NgModule({
