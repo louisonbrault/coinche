@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from crud.user import \
     create_user, \
+    delete_user, \
     get_stats_for_user, \
     get_stats_for_users, \
     get_user_from_id, \
@@ -43,6 +44,22 @@ def modify_user(
     for attr in new_attributes.keys():
         setattr(user_in_db, attr, new_attributes.get(attr))
     return update_user(db, user_in_db)
+
+
+@user_router.delete("/users/{user_id}", tags=["Users"], responses={
+    200: {"description": "User deleted."},
+    400: {"description": "This user participates in games"}})
+def remove_user(user_id: int, logged_in_user: User = Depends(authenticate), db: Session = Depends(get_db)):
+    user_in_db = get_user_from_id(db, user_id)
+    if not user_in_db:
+        raise HTTPException(status_code=404, detail="User not found")
+    if logged_in_user.role != "admin":
+        raise HTTPException(status_code=403, detail="You can't delete this user")
+    try:
+        delete_user(db, user_in_db)
+    except IntegrityError:
+        raise HTTPException(status_code=400, detail="This user participates in games")
+    return {}
 
 
 @user_router.get("/stats", response_model=list[UserStat], tags=["Users"])

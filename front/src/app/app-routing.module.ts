@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ScoreBoardComponent } from './score-board/score-board.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component'
 import { RulesComponent } from './rules/rules.component'
+import { AdminComponent } from './admin/admin.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'games', component: GameListComponent },
   { path: 'games/:game_id', component: NewGameComponent },
+  { path: 'admin', component: AdminComponent },
 ];
 
 @NgModule({

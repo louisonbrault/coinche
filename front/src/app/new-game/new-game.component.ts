@@ -155,7 +155,6 @@ export function checkPlayerValidator(field1: string, field2: string, field3: str
 }
 
 export function sendErrorMessage(notification: NzNotificationService, errorType: string){
-  console.log(errorType);
   switch(errorType) {
    case "FORM_ERROR": {
       notification.error(

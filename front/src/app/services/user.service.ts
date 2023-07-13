@@ -37,5 +37,21 @@ export class UserService {
       return this.http.put<UserLight>(`${this.apiUrl}/users/${user_id}`, {display_name: display_name}, {headers: headers});
   }
 
+  modifyRole(user_id: number, role: string): Observable<UserLight>{
+      var access_token = ls.get('access_token');
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${access_token}`
+        });
+      return this.http.put<UserLight>(`${this.apiUrl}/users/${user_id}`, {role: role}, {headers: headers});
+  }
+
+  deleteUser(user_id: number): Observable<void>{
+      var access_token = ls.get('access_token');
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${access_token}`
+        });
+      return this.http.delete<void>(`${this.apiUrl}/users/${user_id}`, {headers: headers});
+  }
+
 
 }

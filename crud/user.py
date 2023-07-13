@@ -8,7 +8,7 @@ from schemas.user import UserCreate, UserProfile, UserStat
 
 
 def list_users(db: Session):
-    return db.query(User).all()
+    return db.query(User).order_by(User.display_name).all()
 
 
 def create_user(db: Session, user: UserCreate) -> User:
@@ -166,3 +166,11 @@ def get_simple_stat_query(db: Session) -> Query:
              .order_by(wins.desc())
              )
     return query
+
+
+def delete_user(db: Session, user: User):
+    """
+    Works only if the user has not participated in any game
+    """
+    db.delete(user)
+    db.commit()

@@ -5,7 +5,7 @@ from tests.conftest import override_get_db
 from database import get_db
 from main import app
 from routes.security import create_access_token
-from tests.conftest import create_4_users, create_admin, create_user_test
+from tests.conftest import complex_data, create_4_users, create_admin, create_user_test
 
 app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
@@ -57,3 +57,31 @@ def test_update_user_admin(session: Session):
     response = client.put("/users/2", headers={"Authorization": f"Bearer {jwt}"}, json={"google_id": 0})
     assert response.status_code == 200
     assert response.json().get("google_id") == "0"
+
+
+def test_delete_user_no_auth(session: Session):
+    response = client.delete("/users/1")
+    assert response.status_code == 403
+
+
+def test_delete_user_that_not_exists(session: Session):
+    create_user_test(session)
+    jwt = create_access_token({"user_id": 1})
+    response = client.delete("/users/2", headers={"Authorization": f"Bearer {jwt}"})
+    assert response.status_code == 404
+
+
+def test_delete_user_with_games(session: Session):
+    complex_data(session)
+    create_admin(session)
+    jwt = create_access_token({"user_id": 10})
+    response = client.delete("/users/2", headers={"Authorization": f"Bearer {jwt}"})
+    assert response.status_code == 400
+
+
+def test_delete_user(session: Session):
+    create_user_test(session)
+    create_admin(session)
+    jwt = create_access_token({"user_id": 10})
+    response = client.delete("/users/1", headers={"Authorization": f"Bearer {jwt}"})
+    assert response.status_code == 200

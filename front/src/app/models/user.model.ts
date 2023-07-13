@@ -1,6 +1,8 @@
 export class UserLight {
     id!: number
     display_name!: string
+    role!: string
+    google_id!: string
 }
 
 export class UserStat {

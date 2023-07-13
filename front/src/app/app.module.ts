@@ -48,6 +48,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { environment } from 'src/environments/environment';
 import { RulesComponent } from './rules/rules.component';
 import { GameListComponent } from './game-list/game-list.component';
+import { AdminComponent } from './admin/admin.component';
 
 registerLocaleData(fr);
 
@@ -67,7 +68,8 @@ const googleLoginOptions: GoogleInitOptions = {
     ProfileComponent,
     PrivacyPolicyComponent,
     RulesComponent,
-    GameListComponent
+    GameListComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
