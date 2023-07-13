@@ -18,6 +18,8 @@ export class AdminComponent implements OnInit {
 
   users$!: Observable<UserLight[]>;
 
+  newUser!: string;
+
   constructor(private userService: UserService, private store: Store<{ auth: AuthState }>, private notification: NzNotificationService) { }
 
   ngOnInit(): void {
@@ -35,6 +37,22 @@ export class AdminComponent implements OnInit {
         (data) => console.log("role updated"),
         (error) => console.log("error")
       );
+  }
+
+  createUser(): void {
+    this.userService.createUser(this.newUser).subscribe(
+        (data) => {
+          this.users$ = this.userService.getAllUsers();
+          this.newUser = "";
+        },
+        (error) => {
+          this.notification.error(
+            "Erreur",
+            "Impossible de créer l'utilisateur",
+            { nzPlacement: 'bottom' }
+          );
+        }
+    );
   }
 
   deleteUser(userId: number): void {

@@ -37,6 +37,14 @@ export class UserService {
       return this.http.put<UserLight>(`${this.apiUrl}/users/${user_id}`, {display_name: display_name}, {headers: headers});
   }
 
+  createUser(displayName: string): Observable<UserLight>{
+      var access_token = ls.get('access_token');
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${access_token}`
+        });
+      return this.http.post<UserLight>(`${this.apiUrl}/users`, {display_name: displayName}, {headers: headers});
+  }
+
   modifyRole(user_id: number, role: string): Observable<UserLight>{
       var access_token = ls.get('access_token');
       const headers = new HttpHeaders({
