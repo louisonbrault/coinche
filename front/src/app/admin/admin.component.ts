@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit {
   userRole$!: Observable<string>;
   userRole!: string;
 
-  users$!: Observable<UserLight[]>;
+  users!: UserLight[];
 
   newUser!: string;
 
@@ -28,7 +28,9 @@ export class AdminComponent implements OnInit {
         this.userRole = userRole;
      });
 
-     this.users$ = this.userService.getAllUsers();
+     this.userService.getAllUsers().subscribe(
+      (data) => this.users = data,
+     );
 
   }
 
@@ -42,7 +44,9 @@ export class AdminComponent implements OnInit {
   createUser(): void {
     this.userService.createUser(this.newUser).subscribe(
         (data) => {
-          this.users$ = this.userService.getAllUsers();
+          this.userService.getAllUsers().subscribe(
+            (data) => this.users = data,
+          );
           this.newUser = "";
         },
         (error) => {
@@ -55,9 +59,34 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  linkUser(userIdSource: number, googleId: string, userIdToRemove: number){
+    this.userService.deleteUser(userIdToRemove).subscribe(
+      (data) => {
+        this.userService.modifyGoogleId(userIdSource, googleId).subscribe(
+          (data) => {
+            this.userService.getAllUsers().subscribe(
+                (data) => this.users = data,
+            );
+          }
+        );
+      },
+      (error) => {
+        this.notification.error(
+          "Lien impossible",
+          "L'utilisateur cible a des parties",
+          { nzPlacement: 'bottom' }
+        );
+      }
+    );
+  }
+
   deleteUser(userId: number): void {
     this.userService.deleteUser(userId).subscribe(
-        (data) => this.users$ = this.userService.getAllUsers(),
+        (data) => {
+          this.userService.getAllUsers().subscribe(
+            (data) => this.users = data,
+          );
+        },
         (error) => {
           this.notification.error(
             "Suppression impossible",

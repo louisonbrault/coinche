@@ -1,5 +1,5 @@
 <div *ngIf="userRole == 'admin'">
-  <div *ngFor="let user of users$ | async ">
+  <div *ngFor="let user of users">
     <div nz-row class="margin-top-10">
       <div nz-col nzSpan="5" nzOffset="1" class="center-text">
         <a [routerLink]="['/profile', user.id]" class="black">
@@ -15,6 +15,16 @@
       </div>
       <div nz-col nzSpan="1" nzOffset="1" class="center-text font-size-20">
         <span *ngIf="user.google_id" nz-icon nzType="google" nzTheme="outline"></span>
+        <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          <span *ngIf="!user.google_id" nz-icon nzType="link" ></span>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <ng-container *ngFor="let userlink of users">
+              <li *ngIf="userlink.google_id" nz-menu-item (click)="linkUser(user.id, userlink.google_id, userlink.id);">{{ userlink.display_name }}</li>
+            </ng-container>
+          </ul>
+        </nz-dropdown-menu>
       </div>
       <div nz-col nzSpan="1" nzOffset="1" class="center-text font-size-20">
         <span nz-icon nzType="delete" nzTheme="outline" (click)="deleteUser(user.id);"></span>

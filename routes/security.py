@@ -56,7 +56,7 @@ def login(authToken: AuthToken, db: Session = Depends(get_db)) -> AccessToken:
         raise HTTPException(400, detail="Auth token provided is invalid")
     except Exception as e:
         logging.error(traceback.format_exception(e))
-        raise HTTPException(503, detail="Impossible to get info from facebook")
+        raise HTTPException(503, detail="Impossible to get info from Google")
 
     # On recherche dans la db si un utilisateur correspond à l'id facebook
     user = get_user_from_google_id(db, user_google_id)

@@ -53,6 +53,14 @@ export class UserService {
       return this.http.put<UserLight>(`${this.apiUrl}/users/${user_id}`, {role: role}, {headers: headers});
   }
 
+  modifyGoogleId(user_id: number, googleId: string): Observable<UserLight>{
+      var access_token = ls.get('access_token');
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${access_token}`
+        });
+      return this.http.put<UserLight>(`${this.apiUrl}/users/${user_id}`, {google_id: googleId}, {headers: headers});
+  }
+
   deleteUser(user_id: number): Observable<void>{
       var access_token = ls.get('access_token');
       const headers = new HttpHeaders({

@@ -19,6 +19,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -84,6 +85,7 @@ const googleLoginOptions: GoogleInitOptions = {
     NzCheckboxModule,
     NzDatePickerModule,
     NzDividerModule,
+    NzDropDownModule,
     NzFormModule,
     NzGridModule,
     NzIconModule,
