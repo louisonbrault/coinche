@@ -26,6 +26,11 @@ export class NewGameComponent implements OnInit {
   redirectUri!: string;
   gameId?: number;
 
+  player_a1_id?: number;
+  player_a2_id?: number;
+  player_b1_id?: number;
+  player_b2_id?: number;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private userService: UserService,
@@ -33,7 +38,14 @@ export class NewGameComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private notification: NzNotificationService,
-    private store: Store<{ auth: AuthState }>) { }
+    private store: Store<{ auth: AuthState }>) {
+      this.route.queryParams.subscribe(params => {
+        this.player_a1_id = params['player_a1'];
+        this.player_a2_id = params['player_a2'];
+        this.player_b1_id = params['player_b1'];
+        this.player_b2_id = params['player_b2'];
+      });
+    }
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.params['game_id'];
@@ -71,6 +83,18 @@ export class NewGameComponent implements OnInit {
 
   initForm(): void{
     if (this.gameId == null){
+      if (this.player_a1_id){
+        this.gameForm.patchValue({player_a1_id: this.player_a1_id});
+      }
+      if (this.player_a2_id){
+        this.gameForm.patchValue({player_a2_id: this.player_a2_id});
+      }
+      if (this.player_b1_id){
+        this.gameForm.patchValue({player_b1_id: this.player_b1_id});
+      }
+      if (this.player_b2_id){
+        this.gameForm.patchValue({player_b2_id: this.player_b2_id});
+      }
       return;
     }
     this.gameService.getGame(this.gameId).subscribe(

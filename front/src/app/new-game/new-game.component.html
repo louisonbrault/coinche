@@ -76,6 +76,11 @@
     <button nz-button nzType="primary" nzShape="circle" class="button" nzSize="large">
       <span nz-icon nzType="check"></span>
     </button>
+    <a  href="/create?player_a1={{ gameForm.value.player_a1_id }}&player_a2={{ gameForm.value.player_a2_id }}&player_b1={{ gameForm.value.player_b1_id }}&player_b2={{ gameForm.value.player_b2_id }}">
+      <button *ngIf="gameId" nz-button nzType="primary" nzShape="circle" class="new-game-button" nzSize="large" type="button">
+        <span nz-icon nzType="plus"></span>
+      </button>
+    </a>
   </div>
   </form>
 </div>
